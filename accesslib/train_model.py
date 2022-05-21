@@ -6,10 +6,10 @@ from sklearn.metrics import f1_score, plot_confusion_matrix
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    df = pd.read_csv("/home/titoare/Documents/ds/seh/data/final_tarin_data/final_df.csv", index_col=0)
+    df = pd.read_csv("/home/titoare/Documents/ds/seh/final_tarin_data/final_df.csv", index_col=0)
     df.pollutant_code.replace([2, 1, 0], [0, 2, 1], inplace=True)   # Getting standard code.
-    df_test = pd.read_csv("/home/titoare/Documents/ds/seh/data/final_tarin_data/final_test_df.csv", index_col=0)
-    df_test_native = pd.read_csv("/home/titoare/Documents/ds/seh/final_test_df.csv", index_col=0)
+    df_test = pd.read_csv("/home/titoare/Documents/ds/seh/final_tarin_data/final_test_df.csv", index_col=0)
+    df_test_native = pd.read_csv("/home/titoare/Documents/ds/seh/final_tarin_data/final_test_df.csv", index_col=0)
     df.reset_index(inplace=True, drop=True)
 
     # Normalize some data
