@@ -77,13 +77,14 @@ if __name__ == "__main__":
     df['countryName_code'] = df["countryName"].astype('category').cat.codes
     df['City_code'] = df["City"].astype('category').cat.codes
     df['EPRTRAnnexIMainActivityCode_code'] = df["EPRTRAnnexIMainActivityCode"].astype('category').cat.codes
+    df['eprtrSectorName_code'] = df["eprtrSectorName"].astype('category').cat.codes
     df['pollutant_code'] = df["pollutant"].astype('category').cat.codes
 
     # Reindex and sort
     columns_names = ['CITY ID', "cityId_code", 'FacilityInspireID', "FacilityInspireID_code", 'DateTime',
                      'countryName', "countryName_code", 'CONTINENT', 'City', 'City_code',
                      'EPRTRAnnexIMainActivityCode', "EPRTRAnnexIMainActivityCode_code", 'EPRTRAnnexIMainActivityLabel',
-                     'EPRTRSectorCode', 'eprtrSectorName',
+                     'EPRTRSectorCode', 'eprtrSectorName', 'eprtrSectorName_code',
                      'avg_temp', 'avg_wind_speed', 'max_temp', 'max_wind_speed', 'min_temp', 'min_wind_speed',
                      'targetRelease', 'facilityName',
                      'reportingYear', 'MONTH', 'DAY',
@@ -93,9 +94,10 @@ if __name__ == "__main__":
     df = sort_values(df, ['CITY ID', 'FacilityInspireID', 'DateTime'])
 
     # Drop irrelevant columns
-    drop_columns = ['CONTINENT', 'EPRTRAnnexIMainActivityLabel', 'EPRTRSectorCode', 'targetRelease',
+    drop_columns = ['CONTINENT', 'EPRTRSectorCode', 'targetRelease',
                     "facilityName", "REPORTER NAME", "DAY WITH FOGS"]
     df.drop(drop_columns, axis=1, inplace=True)
 
     # Drop two index with NaN string
+    print(df.shape)
     df = df.drop(df[df.EPRTRAnnexIMainActivityCode == "NaN"].index)

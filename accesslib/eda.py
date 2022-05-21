@@ -7,10 +7,15 @@ from accesslib.plot_factory import *
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("/home/titoare/Documents/ds/seh/data/train/final_df.csv", index_col=0)
+    df = pd.read_csv("/home/titoare/Documents/ds/seh/final4_df.csv", index_col=0)
 
-    # Missing values
-    print(df.isnull().sum())  # There are 2 nan: idex 8906, 7238 in ERTActivityCode.
+    parameters = ['DateTime', 'countryName_code',
+                  'EPRTRAnnexIMainActivityCode_code',
+                  'eprtrSectorName_code', 'avg_temp', 'avg_wind_speed',
+                  'pollutant_code']
+
+    # correlation matrix plot
+    correlation_table(df[parameters])
 
     # Plot max temperature in each country
     country_names = df.countryName.unique()
