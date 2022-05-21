@@ -4,7 +4,7 @@ from accesslib.pre_processed.plot_factory import correlation_table, plot_histogr
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("/home/titoare/Documents/ds/seh/final_tarin_data/final_df.csv", index_col=0)
+    df = pd.read_csv("/home/titoare/Documents/ds/seh/data/final_tarin_data/final_df.csv", index_col=0)
 
     parameters = ['DateTime', 'countryName_code',
                   'EPRTRAnnexIMainActivityCode_code',
