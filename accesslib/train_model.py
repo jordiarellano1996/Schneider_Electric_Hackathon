@@ -6,10 +6,10 @@ from sklearn.metrics import f1_score, plot_confusion_matrix
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    df = pd.read_csv("/home/titoare/Documents/ds/seh/data/final_tarin_data/final_df.csv", index_col=0)
+    df = pd.read_csv("/home/titoare/Documents/ds/seh/final_data/final_df.csv", index_col=0)
     df.pollutant_code.replace([2, 1, 0], [0, 2, 1], inplace=True)   # Getting standard code.
-    df_test = pd.read_csv("/home/titoare/Documents/ds/seh/data/final_tarin_data/final_test_df.csv", index_col=0)
-    df_test_native = pd.read_csv("/home/titoare/Documents/ds/seh/data/final_tarin_data/final_test_df.csv", index_col=0)
+    df_test = pd.read_csv("/home/titoare/Documents/ds/seh/final_data/final_test_df.csv", index_col=0)
+    df_test_native = pd.read_csv("/home/titoare/Documents/ds/seh/final_data/final_test_df.csv", index_col=0)
     df.reset_index(inplace=True, drop=True)
 
     # Normalize some data
@@ -88,6 +88,6 @@ if __name__ == "__main__":
     test_predicted_values = model.predict(df_test[parameters].values)
     df_test_native["pollutant"] = test_predicted_values
     submission_df = df_test_native[["test_index", "pollutant"]]
-    submission_df.to_csv("/home/titoare/Documents/ds/seh/submission_folder/predictions.csv", index=False)
-    submission_df.to_json("/home/titoare/Documents/ds/seh/submission_folder/predictions.json", orient="table",
+    submission_df.to_csv("../predictions.csv", index=False)
+    submission_df.to_json("../predictions.json", orient="table",
                           index=False)
