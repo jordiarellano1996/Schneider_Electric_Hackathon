@@ -18,7 +18,7 @@ if __name__ == "__main__":
     correlation_table(df[parameters])
 
     # Plot max temperature in each country
-    country_names = df.countryName.unique()
-    for country_name in country_names:
-        country_df = df.query(f"countryName == '{country_name}'")
-        plot_histogram(country_df, "max_temp", country_name)
+    # country_names = df.countryName.unique()
+    # for country_name in country_names:
+    #     country_df = df.query(f"countryName == '{country_name}'")
+    #     plot_histogram(country_df, "max_temp", country_name)
