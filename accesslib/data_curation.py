@@ -68,21 +68,34 @@ if __name__ == "__main__":
     df = pd.concat([df_csv, df_json], ignore_index=True)
     check_duplicate(df)
 
+    # Timestamp
     df = get_time_code(df, ['reportingYear', 'MONTH', 'DAY'], "DateTime")
 
-    columns_names = ['CITY ID', 'FacilityInspireID', 'DateTime', 'CONTINENT', 'City', 'countryName',
-                     'EPRTRAnnexIMainActivityCode', 'EPRTRAnnexIMainActivityLabel',
-                     'EPRTRSectorCode', 'eprtrSectorName', 'avg_temp',
-                     'avg_wind_speed',
-                     'max_temp', 'max_wind_speed', 'min_temp', 'min_wind_speed', 'targetRelease',
-                     'facilityName', 'reportingYear', 'MONTH',
-                     'DAY', 'REPORTER NAME', 'DAY WITH FOGS', 'pollutant']
+    # Categorical categorical variables to code
+    df['cityId_code'] = df["CITY ID"].astype('category').cat.codes
+    df['FacilityInspireID_code'] = df["FacilityInspireID"].astype('category').cat.codes
+    df['countryName_code'] = df["countryName"].astype('category').cat.codes
+    df['City_code'] = df["City"].astype('category').cat.codes
+    df['EPRTRAnnexIMainActivityCode_code'] = df["EPRTRAnnexIMainActivityCode"].astype('category').cat.codes
+    df['pollutant_code'] = df["pollutant"].astype('category').cat.codes
+
+    # Reindex and sort
+    columns_names = ['CITY ID', "cityId_code", 'FacilityInspireID', "FacilityInspireID_code", 'DateTime',
+                     'countryName', "countryName_code", 'CONTINENT', 'City', 'City_code',
+                     'EPRTRAnnexIMainActivityCode', "EPRTRAnnexIMainActivityCode_code", 'EPRTRAnnexIMainActivityLabel',
+                     'EPRTRSectorCode', 'eprtrSectorName',
+                     'avg_temp', 'avg_wind_speed', 'max_temp', 'max_wind_speed', 'min_temp', 'min_wind_speed',
+                     'targetRelease', 'facilityName',
+                     'reportingYear', 'MONTH', 'DAY',
+                     'REPORTER NAME', 'DAY WITH FOGS', 'pollutant', "pollutant_code"]
 
     df = reindex_df(df, columns_names)
     df = sort_values(df, ['CITY ID', 'FacilityInspireID', 'DateTime'])
 
-    # Categorical categorical variables to code
-    df['cityId_code'] = df["CITY ID"].cat.codes
-    df['FacilityInspireID_code'] = df["FacilityInspireID"].cat.codes
+    # Drop irrelevant columns
+    drop_columns = ['CONTINENT', 'EPRTRAnnexIMainActivityLabel', 'EPRTRSectorCode', 'targetRelease',
+                    "facilityName", "REPORTER NAME", "DAY WITH FOGS"]
+    df.drop(drop_columns, axis=1, inplace=True)
 
-
+    # Drop two index with NaN string
+    df = df.drop(df[df.EPRTRAnnexIMainActivityCode == "NaN"].index)
